@@ -143,7 +143,7 @@ void deformation(int RADIUS, int w, int h, int n, vector<point>& vert,  vector<p
     */
 }
 
-void deformationD(int RADIUS, int w, int h, int n, vector<point>& vert, vector<vector<int>> vertRel,  vector<point>& ort,  vector<point>& tang, unsigned char** volume)
+void deformationD(int RADIUS, int w, int h, int n, vector<point>& vert, vector<vector<int> > vertRel,  vector<point>& ort,  vector<point>& tang, unsigned char** volume)
 {
     int d2 = 20;
     point next;
@@ -197,7 +197,7 @@ void deformationComp1(int RADIUS, int w, int h, int n, vector<point>& vert,  vec
     }
 }
 
-void normUpdate(vector<point>& vert,  vector<vector<int>> vertRel)
+void normUpdate(vector<point>& vert,  vector<vector<int> > vertRel)
 {
     defNorms(40,  vert, vertRel, norm);
 }

@@ -1,6 +1,7 @@
 #include "Algo.h"
 #include <vector>
 #include <iostream>
+#include <math.h>
 //#include "VectOperators.h"
 
 using namespace std;
@@ -51,7 +52,7 @@ point normalize(point vect, int RADIUS)
 }
 
 
-void defVertRel(int divNum, int RADIUS, vector<point>& vert, vector<vector<int>>& vertRel)
+void defVertRel(int divNum, int RADIUS, vector<point>& vert, vector<vector<int> >& vertRel)
 {
 	//Distance between neigbours (depends on devNum)
     double vertDist;
@@ -69,7 +70,7 @@ void defVertRel(int divNum, int RADIUS, vector<point>& vert, vector<vector<int>>
     }
 }
 
-void devideSphere(int iterNum, int RADIUS, vector<point>& vert, vector<vector<int>>& vertRel){
+void devideSphere(int iterNum, int RADIUS, vector<point>& vert, vector<vector<int> >& vertRel){
 
     int sz = vert.size();
 
@@ -81,7 +82,7 @@ void devideSphere(int iterNum, int RADIUS, vector<point>& vert, vector<vector<in
                 vert.push_back(middlepoint(vert[i], vert[vertRel[i][j]]));
 }
 
-void initSphere(int divNum, int RADIUS,/* point center, */ vector<point>& vert, vector<vector<int>>& vertRel){
+void initSphere(int divNum, int RADIUS,/* point center, */ vector<point>& vert, vector<vector<int> >& vertRel){
 
 	#define X .525731112119133606 
     #define Z .850650808352039932 
@@ -117,7 +118,7 @@ void initSphere(int divNum, int RADIUS,/* point center, */ vector<point>& vert, 
     
 }
 
-void defMedians(vector<point> vert, vector<vector<int>>& vertRel, vector<point>& median)
+void defMedians(vector<point> vert, vector<vector<int> >& vertRel, vector<point>& median)
 {
     median.clear();
 
@@ -151,7 +152,7 @@ void defMedians(vector<point> vert, vector<vector<int>>& vertRel, vector<point>&
 
 vector<int> sorted;
 
-void sortRel(vector<point> vert, vector<vector<int>>& vertRel)
+void sortRel(vector<point> vert, vector<vector<int> >& vertRel)
 {
     for(int i = 0; i < vert.size(); i++)
     {
@@ -177,7 +178,7 @@ void sortRel(vector<point> vert, vector<vector<int>>& vertRel)
 }
 
 // for check direction of normals
-void reSort(vector<point> vert, vector<point> norm, vector<vector<int>>& vertRel)
+void reSort(vector<point> vert, vector<point> norm, vector<vector<int> >& vertRel)
 {  
     sorted.clear();
     int sz;
@@ -226,7 +227,7 @@ point defNormal(point p0, point p1, point p2, point p3, point p4, point p5, poin
 }
 
 //Used for moving. Not for lighteting.
-void defNorms(int RADIUS, vector<point> vert, vector<vector<int>> vertRel, vector<point>& norm)
+void defNorms(int RADIUS, vector<point> vert, vector<vector<int> > vertRel, vector<point>& norm)
 {
     norm.clear();
 
@@ -292,7 +293,7 @@ void defTang(vector<point> vert, vector<point> median, vector<point> ort, vector
         tang.push_back(median[i] - ort[i]);
 }
 
-void initAlgo(int divNum/*, point cent*/, int RADIUS, vector<point>& vert, vector<vector<int>>& vertRel, 
+void initAlgo(int divNum/*, point cent*/, int RADIUS, vector<point>& vert, vector<vector<int> >& vertRel,
     vector<point>& ort, vector<point>& tang){
     
     initSphere(divNum, RADIUS, vert, vertRel);

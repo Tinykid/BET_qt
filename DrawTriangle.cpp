@@ -1,3 +1,4 @@
+#include <cmath>
 #include "DrawTriangle.h"
 /*
 struct point2D{

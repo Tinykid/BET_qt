@@ -17,18 +17,15 @@
 
 #define MAX_COLOR 255
 
-std::vector<std::vector<int>> vertRel(defVertNum(3), std::vector<int>());
+std::vector<std::vector<int> > vertRel(defVertNum(3), std::vector<int>());
 
  GLWidget::GLWidget(QWidget *parent)
      : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
  {
-     printf("hello");
-     std::cout << "hello\n";
 
      w = 256;
      h = 256;
      n = 175;
-     qDebug(itoa(8));
      RADIUS = std::min(n, std::min(w, h)) / 4;
      currTexture[0] = n / 2;
      currTexture[1] = w / 2;
@@ -58,6 +55,8 @@ std::vector<std::vector<int>> vertRel(defVertNum(3), std::vector<int>());
 
      dirBrain = "C:/Users/nick/Documents/brain";
      dirTarget = "C:/Users/nick/Documents/brain";
+     //dirBrain = "/home/nick/Documents/BET_qt/BET_qt/brain";
+     //dirTarget = "/home/nick/Documents/BET_qt/BET_qt/brain";
 
      //loadBrain();
 
@@ -120,7 +119,7 @@ std::vector<std::vector<int>> vertRel(defVertNum(3), std::vector<int>());
  {
      GLushort *buffer = new GLushort[w * h];
 
-     //dirName = "brain4/subject04_t1w_p4001.dcm";
+     dirBrain = "brain4/subject04_t1w_p4001.dcm";
      loadFromFile(w, h, dirBrain, buffer);
 
      for(int i = 0; i < 10; i++)
@@ -168,6 +167,7 @@ std::vector<std::vector<int>> vertRel(defVertNum(3), std::vector<int>());
  void GLWidget::reloadData()
  {
      initVol();
+
      deleteWhite(w, h, n, volume);
      initTextures(w, h, n, buffers, volume);
  }

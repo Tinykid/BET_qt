@@ -1,4 +1,5 @@
 #include "fillData.h"
+#include <cstdio>
 //#include <GL\glut.h>
 
 #include "DrawTriangle.h"
@@ -174,7 +175,7 @@ void subInit(int w, int h, int n, unsigned int** tex, unsigned char*** buffers)
 }
 */
 
-void extraction(int w, int h, int n, std::vector<point> vert, std::vector<std::vector<int>> vertRel,
+void extraction(int w, int h, int n, std::vector<point> vert, std::vector<std::vector<int> > vertRel,
     unsigned int** tex, unsigned char*** buffers, unsigned char** volume)
 {
     vector<point> buff;
