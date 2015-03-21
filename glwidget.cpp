@@ -5,9 +5,9 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <algorithm>
 
 #include "glwidget.h"
-#include "Algo.h"
 #include "fillData.h"
 #include "Deformation.h"
 
@@ -15,40 +15,24 @@
 #define GL_MULTISAMPLE  0x809D
 #endif
 
-int defSidesNum(int arg)
-{
-    if(arg == 0)
-        return 30;
-    else
-        return 4 * defSidesNum(arg - 1);
-}
-
-int defVertNum(int arg)
-{
-    if(arg == 0)
-        return 12;
-    else
-        return defVertNum(arg - 1) + defSidesNum(arg - 1);
-}
-
-const int vertNum = defVertNum(3);
-std::vector<std::vector<int>> vertRel(vertNum, std::vector<int>());  //Each vertex has 5 or 6 neigbours
-
-point ppp[7];
-point nnn;
-
 #define MAX_COLOR 255
+
+std::vector<std::vector<int>> vertRel(defVertNum(3), std::vector<int>());
 
  GLWidget::GLWidget(QWidget *parent)
      : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
  {
+     printf("hello");
+     std::cout << "hello\n";
+
      w = 256;
      h = 256;
      n = 175;
-     RADIUS = 40;
-     currTexture[0] = 80;
-     currTexture[1] = 120;
-     currTexture[2] = 120;
+     qDebug(itoa(8));
+     RADIUS = std::min(n, std::min(w, h)) / 4;
+     currTexture[0] = n / 2;
+     currTexture[1] = w / 2;
+     currTexture[2] = h / 2;
      divNum = 3;
      flag = 0;
 
@@ -57,14 +41,13 @@ point nnn;
      xRot = 0;
      yRot = 0;
      zRot = 0;
-     dirName = "brain4/subject04_t1w_p4001.dcm";
 
      qtGreen = QColor::fromCmykF(0.40, 0.0, 1.0, 0.0);
      qtPurple = QColor::fromCmykF(0.39, 0.39, 0.0, 0.0);
 
-     initAlgo(3, 40, vert, vertRel, ort, tang);
+     initAlgo(divNum, RADIUS, vert, vertRel, ort, tang);
 
-     fillData(w, h, n);
+     //fillData(w, h, n);
 
      tex[0] = new unsigned int[n];
      tex[1] = new unsigned int[w];
@@ -73,14 +56,12 @@ point nnn;
      buffers[1] = new unsigned char*[w];
      buffers[2] = new unsigned char*[h];
 
+     dirBrain = "C:/Users/nick/Documents/brain";
+     dirTarget = "C:/Users/nick/Documents/brain";
+
+     //loadBrain();
+
      reloadData();
-/*
-     initVol();
-
-     deleteWhite(w, h, n, volume);
-
-     initTextures(w, h, n, buffers, volume);
-*/
  }
 
  GLWidget::~GLWidget()
@@ -140,14 +121,14 @@ point nnn;
      GLushort *buffer = new GLushort[w * h];
 
      //dirName = "brain4/subject04_t1w_p4001.dcm";
-     loadFromFile(w, h, dirName, buffer);
+     loadFromFile(w, h, dirBrain, buffer);
 
      for(int i = 0; i < 10; i++)
      {
          //sprintf(filename, "brain4/subject04_t1w_p400%i.dcm", i + 1);
-         dirName[25] = '0' + i;
+         dirBrain[25] = '0' + i;
 
-         loadFromFile(w, h, dirName, buffer);
+         loadFromFile(w, h, dirBrain, buffer);
 
          volume[i] = new unsigned char[w * h];
          for(int j = 0; j < w * h; j++)
@@ -158,11 +139,11 @@ point nnn;
      {
          //sprintf(filename, "brain4/subject04_t1w_p400%i.dcm", i + 1);
 
-         dirName = "brain4/subject04_t1w_p40010.dcm";
-         dirName[25] = '0' + int(i / 10) % 10;
-         dirName[26] = '0' + i % 10;
+         dirBrain = "brain4/subject04_t1w_p40010.dcm";
+         dirBrain[25] = '0' + int(i / 10) % 10;
+         dirBrain[26] = '0' + i % 10;
 
-         loadFromFile(w, h, dirName, buffer);
+         loadFromFile(w, h, dirBrain, buffer);
 
          volume[i] = new unsigned char[w * h];
          for(int j = 0; j < w * h; j++)
@@ -173,11 +154,11 @@ point nnn;
      {
          //sprintf(filename, "brain4/subject04_t1w_p40%i.dcm", i + 1);
 
-        dirName = "brain4/subject04_t1w_p40110.dcm";
-        dirName[26] = '0' + i % 10;
-        dirName[25] = '0' + int(i / 10) % 10;
+        dirBrain = "brain4/subject04_t1w_p40110.dcm";
+        dirBrain[26] = '0' + i % 10;
+        dirBrain[25] = '0' + int(i / 10) % 10;
 
-         loadFromFile(w, h, dirName, buffer);
+         loadFromFile(w, h, dirBrain, buffer);
          volume[i] = new unsigned char[w * h];
          for(int j = 0; j < w * h; j++)
              volume[i][j] = buffer[j];
@@ -193,25 +174,27 @@ point nnn;
 
  void GLWidget::deformD()
  {
-     deformationD(40, w, h, n, vert, vertRel, ort, tang, volume);
-     deformationD(40, w, h, n, vert, vertRel, ort, tang, volume);
-     deformationD(40, w, h, n, vert, vertRel, ort, tang, volume);
+     deformationD(RADIUS, w, h, n, vert, vertRel, ort, tang, volume);
+     deformationD(RADIUS, w, h, n, vert, vertRel, ort, tang, volume);
+     deformationD(RADIUS, w, h, n, vert, vertRel, ort, tang, volume);
      updateGL();
  }
 
  void GLWidget::deform3()
  {
-     deformation(40, w, h, n, vert, ort, tang, volume);
-     deformation(40, w, h, n, vert, ort, tang, volume);
-     deformation(40, w, h, n, vert, ort, tang, volume);
+     deformation(RADIUS, w, h, n, vert, ort, tang, volume);
+     deformation(RADIUS, w, h, n, vert, ort, tang, volume);
+     deformation(RADIUS, w, h, n, vert, ort, tang, volume);
      updateGL();
  }
 
  void GLWidget::comp1()
  {
+     /*
      ppp[0].z -= 5;
      nnn = normalize(defNormal(ppp[0], ppp[6], ppp[5], ppp[4], ppp[3], ppp[2], ppp[1]), 50);
      updateGL();
+     */
  }
 
  void GLWidget::reset()
@@ -482,30 +465,6 @@ point nnn;
      lastPos = event->pos();
  }
 
- void GLWidget::keyPressEvent(QKeyEvent *event)
- {
-     /*
-     switch (event->key())
-     {
-     case Qt::Key_Space:
-         //flag = 0;
-         setXRotation(xRot + 8 * 5);
-         repaint();
-         updateGL();
-         break;
-     default:
-         break;
-     }
-     */
-     if(event->key() == 'h')
-     {
-         setXRotation(xRot + 8 * 5);
-         repaint();
-         updateGL();
-
-     }
- }
-
  void GLWidget::loadFromFile(int w, int h, QString fileName, GLushort* imageData)
  {
      FILE* fi(fopen(fileName.toStdString().c_str(), "rb"));
@@ -530,4 +489,48 @@ point nnn;
      //else
          //return false;
  }
+
+ void GLWidget::loadBrain()
+ {
+
+     printf("hello");
+     QDir dir(dirBrain);
+     if(!dir.exists())
+         qWarning("Cannot find the example directory");
+
+     dir.setPath(dirBrain);
+     QFileInfoList list = dir.entryInfoList();
+
+     //n = list.size() - 2;
+     //load 1st image
+     QFileInfo fileInfo1 = list.at(2);
+
+     QString absPath;
+     absPath = dirBrain + "/" + fileInfo1.fileName();
+     QByteArray ba = absPath.toLatin1();
+     char* filename = ba.data();
+     //fillData(w, h, filename);
+/*
+     volume = new unsigned char*[n];
+     for(int i = 0; i < n; i++)
+         volume[i] = new unsigned char[w * h];
+*/
+     GLushort* buff = new GLushort[w * h];
+     std::cout << "n = " << n << "\n";
+
+     for(int i = 2; i < n; ++i)
+     {
+          QFileInfo fileInfo = list.at(i);
+          absPath = dirBrain + "/" + fileInfo.fileName();
+          ba = absPath.toLatin1();
+          filename = ba.data();
+          loadFromFile(w, h, filename, buff);
+
+          printf("%d", i + "\n");
+          //for(int j = 0; j < w * h; j++)
+              //volume[i - 2][j] = buff[j];
+     }
+     delete[] buff;
+ }
+
 

@@ -23,6 +23,22 @@ bool isInVector(vector<point> vect, point p)
 	return false;
 }
 
+int defSidesNum(int arg)
+{
+    if(arg == 0)
+        return 30;
+    else
+        return 4 * defSidesNum(arg - 1);
+}
+
+int defVertNum(int arg)
+{
+    if(arg == 0)
+        return 12;
+    else
+        return defVertNum(arg - 1) + defSidesNum(arg - 1);
+}
+
 point normalize(point vect, int RADIUS)
 {
     point res;

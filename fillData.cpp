@@ -1,8 +1,8 @@
 #include "fillData.h"
-#include <GL\glut.h>
+//#include <GL\glut.h>
 
 #include "DrawTriangle.h"
-
+/*
 #include <gdcmReader.h>
 #include <gdcmImageReader.h>
 #include <gdcmImage.h>
@@ -14,9 +14,9 @@ using namespace std;
 using namespace gdcm;
 #pragma comment(lib,"gdcmMSFF.lib")
 #pragma comment(lib,"gdcmDSED.lib")
-
+*/
 #define MAX_COLOR 255
-
+/*
 void fillData(unsigned int& w, unsigned int& h, unsigned int n){
 
     // loading data
@@ -46,7 +46,7 @@ void fillData(unsigned int& w, unsigned int& h, unsigned int n){
 		//return 2;
 	}
 }
-
+*/
 void deleteWhite(int w, int h, int n, unsigned char** volume)
 {
     for(int i = 0; i < n; i++)
@@ -133,7 +133,7 @@ void subExec(int w, int h, int n, unsigned char** volume, bool* mask){
         nnn = n - 1;
     }
 }
-
+/*
 void subInit(int w, int h, int n, unsigned int** tex, unsigned char*** buffers)
 {
     glEnable(GL_TEXTURE_2D);
@@ -172,7 +172,7 @@ void subInit(int w, int h, int n, unsigned int** tex, unsigned char*** buffers)
 	glEnable(GL_DEPTH_TEST);
 	glMatrixMode (GL_MODELVIEW);
 }
-
+*/
 
 void extraction(int w, int h, int n, std::vector<point> vert, std::vector<std::vector<int>> vertRel,
     unsigned int** tex, unsigned char*** buffers, unsigned char** volume)
@@ -208,7 +208,7 @@ void extraction(int w, int h, int n, std::vector<point> vert, std::vector<std::v
                 volume[i][j] = 0;
     */
     initTextures(w, h, n, buffers, volume);
-    subInit(w, h, n, tex, buffers);
+    //subInit(w, h, n, tex, buffers);
 }
 
 

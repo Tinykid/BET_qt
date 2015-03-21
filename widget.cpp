@@ -175,7 +175,7 @@ void Window::setInputDirectory()
                                 /*directoryLabel->text()*/lbl->text(),
                                 options);
     if (!directory.isEmpty())
-        glWidget->dirTempl = directory;
+        glWidget->dirTarget = directory;
 }
 
 
@@ -189,5 +189,5 @@ void Window::setTemplDirectory()
                                 /*directoryLabel->text()*/lbl->text(),
                                 options);
     if (!directory.isEmpty())
-        glWidget->dirTempl = directory;
+        glWidget->dirTarget = directory;
 }

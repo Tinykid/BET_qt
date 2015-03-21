@@ -8,6 +8,7 @@
 
 #include <vector>
 #include "VectOperators.h"
+#include "Algo.h"
 
  class GLWidget : public QGLWidget
  {
@@ -23,11 +24,13 @@
      void initVol();
      void reloadData();
      void subInit();
+     void loadBrain();
 
-     QString dirName;
-     QString dirTempl;
+     QString dirBrain;
+     QString dirTarget;
 
      std::vector<point> vert;
+     //std::vector<std::vector<int>> vertRel;
      std::vector<point> ort;
      std::vector<point> tang;
      unsigned char **buffers[3];
@@ -70,7 +73,6 @@
      void resizeGL(int width, int height);
      void mousePressEvent(QMouseEvent *event);
      void mouseMoveEvent(QMouseEvent *event);
-     void keyPressEvent(QKeyEvent *event);
 
  private:
      int xRot;

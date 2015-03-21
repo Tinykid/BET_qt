@@ -7,6 +7,9 @@
 bool isInVector(std::vector<int> vect, int val);
 bool isInVector(std::vector<point> vect, point p);
 
+int defSidesNum(int arg);
+int defVertNum(int arg);
+
 point normalize(point vect, int RADIUS);
 
 void defVertRel(int divNum, int RADIUS, std::vector<point>& vert, std::vector<std::vector<int>>& vertRel);
