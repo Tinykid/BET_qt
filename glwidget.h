@@ -6,10 +6,6 @@
 #include <QColor>
 #include <QKeyEvent>
 
-#include <vector>
-#include "VectOperators.h"
-#include "Algo.h"
-
  class GLWidget : public QGLWidget
  {
      Q_OBJECT
@@ -20,61 +16,13 @@
 
      QSize minimumSizeHint() const;
      QSize sizeHint() const;
-     void loadFromFile(int w, int h, QString filename, GLushort* buffer);
-     void reloadData();
-     void subInit();
-     void loadBrain();
-
-     QString dirBrain;
-     QString dirTarget;
-
-     std::vector<point> vert;
-     //std::vector<std::vector<int>> vertRel;
-     std::vector<point> ort;
-     std::vector<point> tang;
-     unsigned char **buffers[3];
-     unsigned int *tex[3];
-     unsigned int w;
-     unsigned int h;
-     unsigned int n;
-     unsigned char** volume;
-     unsigned int currTexture[3];
-     bool flag;
-     int divNum;
-     int RADIUS;
-
- public slots:
-     void setXRotation(int angle);
-     void setYRotation(int angle);
-     void setZRotation(int angle);
-     void deformD();
-     void deform3();
-     void comp1();
-     void reset();
-     void extract();
-     void hideTex();
-     void loadData();
-     void updateNorm();
-     void pickXsurf(int val);
-     void pickYsurf(int val);
-     void pickZsurf(int val);
-
- signals:
-     void xRotationChanged(int angle);
-     void yRotationChanged(int angle);
-     void zRotationChanged(int angle);
 
  protected:
      void initializeGL();
      void paintGL();
      void resizeGL(int width, int height);
-     void mousePressEvent(QMouseEvent *event);
-     void mouseMoveEvent(QMouseEvent *event);
 
  private:
-     int xRot;
-     int yRot;
-     int zRot;
 
      QPoint lastPos;
      QColor qtGreen;

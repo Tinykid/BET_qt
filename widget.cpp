@@ -30,7 +30,7 @@ Window::Window()
     xSlider = createSliderZ();
     ySlider = createSliderXY();
     zSlider = createSliderXY();
-
+/*
     connect(xSlider, SIGNAL(valueChanged(int)), glWidget, SLOT(pickXsurf(int)));
     //connect(glWidget, SIGNAL(xRotationChanged(int)), xSlider, SLOT(setValue(int)));
     connect(ySlider, SIGNAL(valueChanged(int)), glWidget, SLOT(pickYsurf(int)));
@@ -45,7 +45,7 @@ Window::Window()
     connect(btnExtr, SIGNAL(clicked()), glWidget, SLOT(extract()));
     connect(btnHideTex, SIGNAL(clicked()), glWidget, SLOT(hideTex()));
     connect(btnUpdateNorm, SIGNAL(clicked()), glWidget, SLOT(updateNorm()));
-
+*/
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->addWidget(glWidget);
     mainLayout->addWidget(xSlider);
@@ -141,12 +141,12 @@ void Window::keyPressEvent(QKeyEvent *e)
 
 void Window::slotMenuHide()
 {
-    glWidget->hideTex();
+    //glWidget->hideTex();
 }
 
 void Window::slotMenuReset()
 {
-    glWidget->reset();
+    //glWidget->reset();
 }
 
 void Window::getInfo()
@@ -174,8 +174,8 @@ void Window::setBrainDirectory()
                                 tr("QFileDialog::getExistingDirectory()"),
                                 /*directoryLabel->text()*/lbl->text(),
                                 options);
-    if (!directory.isEmpty())
-        glWidget->dirBrain = directory;
+   // if (!directory.isEmpty())
+        //glWidget->dirBrain = directory;
 }
 
 
@@ -188,6 +188,6 @@ void Window::setTargetDirectory()
                                 tr("QFileDialog::getExistingDirectory()"),
                                 /*directoryLabel->text()*/lbl->text(),
                                 options);
-    if (!directory.isEmpty())
-        glWidget->dirTarget = directory;
+    //if (!directory.isEmpty())
+        //glWidget->dirTarget = directory;
 }
