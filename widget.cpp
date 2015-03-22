@@ -54,6 +54,7 @@ Window::Window()
     mainLayout->addWidget(zSlider);
 
     createMenu();
+    //menuBar->setNativeMenuBar(false);
     mainLayout->setMenuBar(menuBar);
 
     QVBoxLayout *cntrLayout = new QVBoxLayout;
