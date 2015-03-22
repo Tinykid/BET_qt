@@ -17,12 +17,12 @@
 
 #define MAX_COLOR 255
 
-std::vector<std::vector<int> > vertRel(defVertNum(3), std::vector<int>());
+//std::vector<std::vector<int> > vertRel(defVertNum(3), std::vector<int>());
 
  GLWidget::GLWidget(QWidget *parent)
      : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
  {
-
+     vertRel.resize(defVertNum(3), std::vector<int>());
      w = 256;
      h = 256;
      n = 175;

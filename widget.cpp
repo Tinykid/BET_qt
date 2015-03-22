@@ -60,9 +60,9 @@ Window::Window()
 
     QGroupBox* verticalGroupBox = new QGroupBox(tr("Actions"));
 
-    cntrLayout->addWidget(btnDef);
+    //cntrLayout->addWidget(btnDef);
     cntrLayout->addWidget(btnDef3);
-    cntrLayout->addWidget(btnDefComp1);
+    //cntrLayout->addWidget(btnDefComp1);
     cntrLayout->addWidget(btnReset);
     cntrLayout->addWidget(btnExtr);
     cntrLayout->addWidget(btnHideTex);

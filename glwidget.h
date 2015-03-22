@@ -29,7 +29,7 @@
      QString dirTarget;
 
      std::vector<point> vert;
-     //std::vector<std::vector<int>> vertRel;
+     std::vector<std::vector<int> > vertRel;
      std::vector<point> ort;
      std::vector<point> tang;
      unsigned char **buffers[3];
