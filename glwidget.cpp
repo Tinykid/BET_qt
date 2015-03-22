@@ -53,12 +53,8 @@ std::vector<std::vector<int> > vertRel(defVertNum(3), std::vector<int>());
      buffers[1] = new unsigned char*[w];
      buffers[2] = new unsigned char*[h];
 
-     dirBrain = "C:/Users/nick/Documents/brain";
-     dirTarget = "C:/Users/nick/Documents/brain";
-     //dirBrain = "/home/nick/Documents/BET_qt/BET_qt/brain";
-     //dirTarget = "/home/nick/Documents/BET_qt/BET_qt/brain";
-
-     //loadBrain();
+     dirBrain = "/home/nick/Documents/BET_qt/BET_qt/brain4";
+     dirTarget = "/home/nick/Documents/BET_qt/BET_qt/brain4";
 
      reloadData();
  }
@@ -115,58 +111,9 @@ std::vector<std::vector<int> > vertRel(defVertNum(3), std::vector<int>());
      }
  }
 
- void GLWidget::initVol()
- {
-     GLushort *buffer = new GLushort[w * h];
-
-     dirBrain = "brain4/subject04_t1w_p4001.dcm";
-     loadFromFile(w, h, dirBrain, buffer);
-
-     for(int i = 0; i < 10; i++)
-     {
-         //sprintf(filename, "brain4/subject04_t1w_p400%i.dcm", i + 1);
-         dirBrain[25] = '0' + i;
-
-         loadFromFile(w, h, dirBrain, buffer);
-
-         volume[i] = new unsigned char[w * h];
-         for(int j = 0; j < w * h; j++)
-             volume[i][j] = buffer[j];
-     }
-
-     for(int i = 10; i < 100; i++)
-     {
-         //sprintf(filename, "brain4/subject04_t1w_p400%i.dcm", i + 1);
-
-         dirBrain = "brain4/subject04_t1w_p40010.dcm";
-         dirBrain[25] = '0' + int(i / 10) % 10;
-         dirBrain[26] = '0' + i % 10;
-
-         loadFromFile(w, h, dirBrain, buffer);
-
-         volume[i] = new unsigned char[w * h];
-         for(int j = 0; j < w * h; j++)
-             volume[i][j] = buffer[j];
-     }
-
-     for(int i = 100; i < n; i++)
-     {
-         //sprintf(filename, "brain4/subject04_t1w_p40%i.dcm", i + 1);
-
-        dirBrain = "brain4/subject04_t1w_p40110.dcm";
-        dirBrain[26] = '0' + i % 10;
-        dirBrain[25] = '0' + int(i / 10) % 10;
-
-         loadFromFile(w, h, dirBrain, buffer);
-         volume[i] = new unsigned char[w * h];
-         for(int j = 0; j < w * h; j++)
-             volume[i][j] = buffer[j];
-     }
- }
-
  void GLWidget::reloadData()
  {
-     initVol();
+     loadBrain();
 
      deleteWhite(w, h, n, volume);
      initTextures(w, h, n, buffers, volume);
@@ -229,17 +176,6 @@ std::vector<std::vector<int> > vertRel(defVertNum(3), std::vector<int>());
 
      updateGL();
  }
-/*
- void GLWidget::setDir(QString dir)
- {
-     this->dirName = dir;
- }
-
- void GLWidget::setDirTempl(QString dir)
- {
-     this->dirTempl = dir;
- }
-*/
 
  void GLWidget::pickXsurf(int val)
  {
@@ -493,7 +429,7 @@ std::vector<std::vector<int> > vertRel(defVertNum(3), std::vector<int>());
  void GLWidget::loadBrain()
  {
 
-     printf("hello");
+     printf("hello\n");
      QDir dir(dirBrain);
      if(!dir.exists())
          qWarning("Cannot find the example directory");
@@ -510,13 +446,12 @@ std::vector<std::vector<int> > vertRel(defVertNum(3), std::vector<int>());
      QByteArray ba = absPath.toLatin1();
      char* filename = ba.data();
      //fillData(w, h, filename);
-/*
+
      volume = new unsigned char*[n];
      for(int i = 0; i < n; i++)
          volume[i] = new unsigned char[w * h];
-*/
+
      GLushort* buff = new GLushort[w * h];
-     std::cout << "n = " << n << "\n";
 
      for(int i = 2; i < n; ++i)
      {
@@ -526,9 +461,8 @@ std::vector<std::vector<int> > vertRel(defVertNum(3), std::vector<int>());
           filename = ba.data();
           loadFromFile(w, h, filename, buff);
 
-          printf("%d", i + "\n");
-          //for(int j = 0; j < w * h; j++)
-              //volume[i - 2][j] = buff[j];
+          for(int j = 0; j < w * h; j++)
+              volume[i - 2][j] = buff[j];
      }
      delete[] buff;
  }

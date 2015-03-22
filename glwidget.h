@@ -21,7 +21,6 @@
      QSize minimumSizeHint() const;
      QSize sizeHint() const;
      void loadFromFile(int w, int h, QString filename, GLushort* buffer);
-     void initVol();
      void reloadData();
      void subInit();
      void loadBrain();
@@ -56,8 +55,6 @@
      void hideTex();
      void loadData();
      void updateNorm();
-     //void setDir(QString dir);
-     //void setDirTempl(QString dir);
      void pickXsurf(int val);
      void pickYsurf(int val);
      void pickZsurf(int val);

@@ -24,8 +24,8 @@ public slots:
     void slotMenuHide();
     void slotMenuReset();
     void getInfo();
-    void setInputDirectory();
-    void setTemplDirectory();
+    void setBrainDirectory();
+    void setTargetDirectory();
 
 protected:
     void keyPressEvent(QKeyEvent *event);

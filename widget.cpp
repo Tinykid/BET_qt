@@ -103,8 +103,8 @@ void Window::createMenu()
     connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
     connect(resetAction, SIGNAL(triggered()), this, SLOT(slotMenuReset()));
     connect(infoAction, SIGNAL(triggered()), this, SLOT(getInfo()));
-    connect(loadInputAction, SIGNAL(triggered()), this, SLOT(setInputDirectory()));
-    connect(loadTemplAction, SIGNAL(triggered()), this, SLOT(setTemplDirectory()));
+    connect(loadInputAction, SIGNAL(triggered()), this, SLOT(setBrainDirectory()));
+    connect(loadTemplAction, SIGNAL(triggered()), this, SLOT(setTargetDirectory()));
 
 }
 
@@ -165,7 +165,7 @@ void Window::getInfo()
     */
 }
 
-void Window::setInputDirectory()
+void Window::setBrainDirectory()
  {
     QFileDialog::Options options = QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly;
     /*if (!native->isChecked())
@@ -175,11 +175,11 @@ void Window::setInputDirectory()
                                 /*directoryLabel->text()*/lbl->text(),
                                 options);
     if (!directory.isEmpty())
-        glWidget->dirTarget = directory;
+        glWidget->dirBrain = directory;
 }
 
 
-void Window::setTemplDirectory()
+void Window::setTargetDirectory()
  {
     QFileDialog::Options options = QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly;
     /*if (!native->isChecked())
